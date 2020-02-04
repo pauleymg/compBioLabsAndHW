@@ -39,7 +39,7 @@ str(allRating)
 rankDF <- as.data.frame(allRating) #from a matrix
 rankDF <- data.frame(selfRating, pennyRating, lennyRating, stewieRating) #from vectors
 
-#lab step #13: compare object from step #10 (allRating) to one of the two created in step #12 (vectorDataFrame)
+#lab step #13: compare object from step #10 (allRating) to one of the two created in step #12 (rankDF)
 dim(allRating)
 dim(rankDF)
 # they look the same in dim (identical data)
@@ -67,13 +67,12 @@ episodeNumerals <- c("I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX")
 #lab step #15: add row names to the objects created in steps 10 & 12
 row.names(allRating) <- episodeNumerals
 row.names(rankDF) <- episodeNumerals
-# print(allRating) #uncomment this command to make sure it worked, if that seems necessary
 
 #lab step #16: Access third row of matrix from step #10 (allRating)
 allRating[3,]
 
-#lab step #17: Access the fourth column of the data frame from step #12 (vectorDataFrame)
-vectorDataFrame[,4]
+#lab step #17: Access the fourth column of the data frame from step #12 (rankDF)
+rankDF[,4]
 
 #lab step #18: Access my ranking for episode V.
 allRating[5,1]
@@ -94,7 +93,6 @@ allRating[c(4,6),c(2,4)]
 LennySWAP <- rankDF[c(2,5),3]
 rankDF[2,3] <- LennySWAP[2]
 rankDF[5,3] <- LennySWAP[1]
-print(rankDF)
 #other way: rankDF[c(2,5),3] <- rankDF[c(5,2),3] #does the swap both at once
 
 #lab step #24: Try indexing with row and column names
@@ -102,13 +100,7 @@ allRating["III", "pennyRating"]
 rankDF["III", "pennyRating"]
 
 #lab step #25: index with row and column names to undo step #23's swap
-LennySWAP <- rankDF[c("II", "V"), "lennyRating"]
-rankDF["II", "lennyRating"] <- LennySWAP[2]
-rankDF["V", "lennyRating"] <- LennySWAP[1]
-print(rankDF)
+rankDF[c("V", "II"), "lennyRating"] <- rankDF[c("II", "V"), "lennyRating"]
 
 #lab step #26: use $ operator to specify columns (variables) and redo step #23's swap
-LennySWAP <- rankDF$lennyRating[c(2,5)]
-rankDF$lennyRating[2] <- LennySWAP[2]
-rankDF$lennyRating[5] <- LennySWAP[1]
-print(rankDF)
+rankDF$lennyRating[c(5,2)] <- rankDF$lennyRating[c(2,5)]
