@@ -32,10 +32,10 @@ for(i in Weeks){
 #---- step 3 ----
 currentPopulation <- 2000 # number of individuals in the population, but not for long
 shrinkage <- 0.95 # 5% decline
-Years <- 1:7 # how many years to project forward
+Annual <- 1:7 # how many years to project forward
 
 # step 3 solution
-for (i in Years){
+for (i in Annual){
     currentPopulation <- currentPopulation * shrinkage # mutliply population to estimate decline
     print(currentPopulation) # print result every loop cycle
 }
@@ -69,7 +69,7 @@ print(RepeatedZero)
 
 #---- step 5c ----
 Placeholder <- rep(0, QuantityOfZeroes) # another 18 0s as a placeholder vector
-Placeholder[1] <- IntegerOne <- # place the number 1 at the first position
+Placeholder[1] <- IntegerOne # place the number 1 at the first position
 print(Placeholder)
 
 #---- step 5d ----
@@ -133,3 +133,32 @@ na.exclude(NewCarbon) == na.exclude(NewCarbon2) # comparing the output of the fo
 
 #create a csv using the data from one of the two methods
 write.csv(NewCarbon, file = "YearlyPercentChangesInCO2.csv")
+
+#---- step 8e ----
+
+# Find years with non-zero data
+TotalAO <- Carbon$Total[Carbon$Total > 0] # all data for the Total column in which data > 0
+GasAO <- Carbon$Gas[Carbon$Gas > 0]
+LiquidsAO <- Carbon$Liquids[Carbon$Liquids > 0]
+SolidsAO <- Carbon$Solids[Carbon$Solids > 0]
+CementAO <- Carbon$CementProduction[Carbon$CementProduction > 0]
+GasFlareAO <- Carbon$GasFlaring[Carbon$GasFlaring > 0]
+PerCapitaAO <- na.omit(Carbon$PerCapita[Carbon$PerCapita > 0])
+
+# preallocate a data frame
+PercentHistoric <- data.frame(Carbon$Year[nrow(Carbon)], #(year is last year of data)
+                              TotalAO[1], # first non-zero observation
+                              GasAO[1], 
+                              LiquidsAO[1], 
+                              SolidsAO[1], 
+                              CementAO[1], 
+                              GasFlareAO[1], 
+                              PerCapitaAO[1]) # preallocated single-row data frame 
+
+for (i in 2:ncol(PercentHistoric)){
+    PercentHistoric[,i] <- ((Carbon[nrow(Carbon),i] - PercentHistoric[,i]) / PercentHistoric[,i]) * 100 # percent change first year non-zero data to last year of data
+}
+nameFix <- c("Year", "Total", "Gas", "Liquids", "Solids", "CementProduction", "GasFlaring", "PerCapita")
+names(PercentHistoric) <- nameFix # match column names to original data
+
+write.csv(PercentHistoric, file = "HistoricPercentChangesInCO2") #write data as csv
