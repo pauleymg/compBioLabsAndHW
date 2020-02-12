@@ -16,8 +16,8 @@ for(i in howMany){
 } # prints message desired number of times
 
 #---- step 2 ----
-TimMoneyInitial <- 10 # Dollars
-TimAllowance <- 5 # Dollars
+TimMoneyInitial <- 10 # Tim's starting funds inDollars
+TimAllowance <- 5 # Weekly allowance in Dollars
 GumPerWeek <- 2 # how many packs of gum does Tim buy each week
 GumPrice <- 1.34 # price of gum (includes tax)
 Weeks <- 1:8 # how many times the for loop cycles
@@ -74,23 +74,23 @@ print(Placeholder)
 
 #---- step 5d ----
 for (i in 2:QuantityOfZeroes){
-    Placeholder[i] <- IntegerOne + (IntegerTwo * Placeholder[i - 1])
+    Placeholder[i] <- IntegerOne + (IntegerTwo * Placeholder[i - 1]) # 1 + (2 * previous_value)
 }
 print(Placeholder)
 
 #---- step 6 ----
 FibEnd <- 20 # how many fibonacci numbers we want to generate
-FibonacciSeq <- rep(0, FibEnd) # placeholder zeros, however many were specified above
+FibonacciSeq <- rep(0, FibEnd) # generate placeholder zeros, however many were specified above
 FibonacciSeq[2] <- IntegerOne # place 1 at the second position
 for (i in 3:FibEnd){ # we start at three to avoid overwriting the 0 & 1 in positions 1 & 2.
-    FibonacciSeq[i] <- FibonacciSeq[i - IntegerOne] + FibonacciSeq[i - IntegerTwo] #math of the Fibonacci sequence
+    FibonacciSeq[i] <- FibonacciSeq[i - IntegerOne] + FibonacciSeq[i - IntegerTwo] # math of the Fibonacci sequence
 }
 print(FibonacciSeq)
 
 #---- step 7 ----
 # storage accomplished in step 4
 
-plot(TimeSteps, PopulationSteps, xlab = "Time Steps", ylab = "Population Abundance") # Visualizing the data
+plot(TimeSteps, PopulationSteps, xlab = "Time Steps", ylab = "Population Abundance") # Visualizing the data from step 4.
 
 #---- step 8a ----
 Carbon <- read.csv("CO2_data_cut_paste.csv") # load data
@@ -106,7 +106,7 @@ for (i in 2:ncol(Carbon)){
 
 #---- step 8c ----
 
-#-# for loop approach
+#-# row-by-row for loop approach
 interim <- list() # creates a blank list to push into
 
 for (i in 2:nrow(Carbon)){
@@ -118,7 +118,7 @@ NewCarbon <- do.call(what=rbind.data.frame, interim) # turn the list into a data
 NewCarbon$Year <- Carbon$Year[2:nrow(Carbon)] # The for-loop mangled the year column. This fixes it.
 
 
-#-# element by element approach
+#-# vectorize with user-defined function approach
 func <- function(x) c(NA, (tail(x, - 1) - head(x, - 1)) / head(x, - 1) * 100) # function to calculate percent change
 
 NewCarbon2 <- sapply(Carbon[, sapply(Carbon, is.numeric)], func) # this, and the above function, based on MPhD's answer to isuckatcoding's question on StackOverflow.
@@ -143,7 +143,7 @@ LiquidsAO <- Carbon$Liquids[Carbon$Liquids > 0]
 SolidsAO <- Carbon$Solids[Carbon$Solids > 0]
 CementAO <- Carbon$CementProduction[Carbon$CementProduction > 0]
 GasFlareAO <- Carbon$GasFlaring[Carbon$GasFlaring > 0]
-PerCapitaAO <- na.omit(Carbon$PerCapita[Carbon$PerCapita > 0])
+PerCapitaAO <- na.omit(Carbon$PerCapita[Carbon$PerCapita > 0]) # this column had NAs, which needed to be omitted for the code below to work, hence na.omit function
 
 # preallocate a data frame
 PercentHistoric <- data.frame(Carbon$Year[nrow(Carbon)], #(year is last year of data)
@@ -158,7 +158,8 @@ PercentHistoric <- data.frame(Carbon$Year[nrow(Carbon)], #(year is last year of 
 for (i in 2:ncol(PercentHistoric)){
     PercentHistoric[,i] <- ((Carbon[nrow(Carbon),i] - PercentHistoric[,i]) / PercentHistoric[,i]) * 100 # percent change first year non-zero data to last year of data
 }
-nameFix <- c("Year", "Total", "Gas", "Liquids", "Solids", "CementProduction", "GasFlaring", "PerCapita")
-names(PercentHistoric) <- nameFix # match column names to original data
+nameFix <- c("Year", "Total", "Gas", "Liquids", "Solids", "CementProduction", "GasFlaring", "PerCapita") # vector of names that matches the original data's column names
+
+names(PercentHistoric) <- nameFix # apply matching column names to the data frame
 
 write.csv(PercentHistoric, file = "HistoricPercentChangesInCO2") #write data as csv
