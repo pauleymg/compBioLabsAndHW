@@ -161,16 +161,39 @@ write.csv(myResults, file = "PredPreyResults.csv") # write to file
 
 initPreyVec <- seq(from = 10, to = 100, by = 10) # set starting values
 
-# set new storage objects equivalent to nOverTime & pOverTime for easy comparison (equivalence checking)
-VectordN <- rep(0, totalGenerations) # to store n value at each time step
-VectordN[1] <- initPrey # set initial prey abundance
+# create result dataframe or matrix
+RESULTS <- matrix(NA, nrow = length(LVTime), ncol = 2 * length(initPreyVec)) # odd number columns will store prey data, even number columns will store predator data. This allows the results for both predator and prey from a simulation to be adjacent (for example: the prey column for the trial in which the prey population starts at 20 will have its corresponding predator population in the column to the right).
 
-VectordP <- rep(0, totalGenerations) # to store p value at each time step
-VectordP[1] <- initPred # set initial pred abundance
+for (i in 1:length(initPreyVec)){
+    VectordN <- rep(0, totalGenerations) # to store n value at each time step
+    VectordN[1] <- initPreyVec[i] # set initial prey abundance, swapping value on each cycle
+    
+    VectordP <- rep(0, totalGenerations) # to store p value at each time step
+    VectordP[1] <- initPred # set initial pred abundance
+    
+    # Vectorized Lotka-Volterra prey equation
+    VectordN[2:length(LVTime)] <- nOverTime[1:length(LVTime) - 1] + (r * nOverTime[1:length(LVTime) - 1]) - (a * nOverTime[1:length(LVTime) - 1] * pOverTime[1:length(LVTime) - 1]) #calculate n[t]
+    
+    negativeRemover <- VectordN < 0 # locate the positions of all negative prey results
+    VectordN[negativeRemover] <- 0 # set negative prey results to zero
+    
+    VectordP[2:length(LVTime)] <- pOverTime[1:length(LVTime) - 1] + (k * a * nOverTime[1:length(LVTime) - 1] * pOverTime[1:length(LVTime) - 1]) - (m * pOverTime[1:length(LVTime) - 1]) # calculate p[t]
+    
+    RESULTS[, (2 * i) - 1] <- VectordN # push prey results into odd # column
+    RESULTS[, (2 * i)] <- VectordP # push predator results to even # column
+}
 
-# Vectorized Lotka-Volterra
-VectordN[2:length(LVTime)] <- nOverTime[1:length(LVTime) - 1] + (r * nOverTime[1:length(LVTime) - 1]) - (a * nOverTime[1:length(LVTime) - 1] * pOverTime[1:length(LVTime) - 1])
+# convert to data frame
+RESULTS <- data.frame(RESULTS)
 
-VectordP[2:length(LVTime)] <- pOverTime[1:length(LVTime) - 1] + (k * a * nOverTime[1:length(LVTime) - 1] * pOverTime[1:length(LVTime) - 1]) - (m * pOverTime[1:length(LVTime) - 1]) 
+# create descriptive column names 
+#(number refers to the starting prey population)
+#(text indicates whether the column tracks prey or predators)
+ColNaming <- c("PreyInit10", "PredResp10", "PreyInit20", "PredResp20", "PreyInit30", "PredResp30", "PreyInit40", "PredResp40", "PreyInit50", "PredResp50", "PreyInit60", "PredResp60", "PreyInit70", "PredResp70", "PreyInit80", "PredResp80", "PreyInit90", "PredResp90", "PreyInit100", "PredResp100")
+names(RESULTS) <- ColNaming # affix column names to data frame
 
-# Part 3 currently under construction
+# append time column onto data frame
+RESULTS$TimeStep <- LVTime
+
+# write data to file
+write.csv(RESULTS, file = "Part3_ParameterStudyResults.csv")
