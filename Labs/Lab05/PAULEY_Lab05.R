@@ -135,7 +135,7 @@ for(i in 2:totalGenerations){
 LineColors <- hcl.colors(n = 2, palette = "Blue-Red 3") # select colors for the plot
 
 # plot prey abundance
-plot(LVTime, nOverTime, type = "l", xlab = "Generations", ylab = "Population", lwd = 3, col = LineColors[1], main = "Results of Simulated Lotka-Volterra predator-prey model") 
+plot(LVTime, nOverTime, type = "l", xlab = "Generations", ylab = "Population", lwd = 3, col = LineColors[1], main = "Simulated Lotka-Volterra predator-prey model") 
 
 # add predator abundance data
 lines(LVTime, pOverTime, lwd = 3, col = LineColors[2])
@@ -155,3 +155,57 @@ PredatorAbundance <- pOverTime
 myResults <- cbind(TimeStep, PreyAbundance, PredatorAbundance)
 
 write.csv(myResults, file = "PredPreyResults.csv") # write to file
+
+#---- Part 3 ----
+
+#create initial prey abundances
+initPreyVec <- seq(from = 10, to = 100, by = 10)
+
+# preallocate a data-holding arrays
+RESULTS <- matrix(data = NA, nrow = totalGenerations, ncol = (2 * length(initPreyVec)))
+nOverTime <- rep(0, totalGenerations)
+pOverTime <- rep(0, totalGenerations)
+pOverTime[1] <- initPred
+
+for (h in 1:length(initPreyVec)){
+    
+    nOverTime[1] <- initPreyVec[h] # set initial prey abundance
+    
+    for(i in 2:totalGenerations){
+        # calculate prey population at time step
+        nOverTime[i] <- nOverTime[i - 1] + (r * nOverTime[i - 1]) - (a * nOverTime[i - 1] * pOverTime[i - 1])
+        
+        # check for negative prey value
+        if (nOverTime[i] < 0){
+            nOverTime[i] <- 0
+        }
+        
+        # calculate predator population at time step
+        pOverTime[i] <- pOverTime[i - 1] + (k * a * nOverTime[i - 1] * pOverTime[i - 1]) - (m * pOverTime[i - 1])
+    }
+    
+    RESULTS[,(2 * h) - 1] <- nOverTime # store prey abundances in odd columns
+    RESULTS[,(2 * h)] <- pOverTime # store predator abundances in even columns
+}
+
+# convert to data frame
+RESULTS <- data.frame(RESULTS)
+
+# create vector of column names, with two-part names:
+# "#Trial" specifies initial abundance of prey for that trial
+# "_Prey" designates a prey data column
+# "_Predator" designates a predator data column
+naming <- c("10Trial_Prey", "10Trial_Predator", "20Trial_Prey", "20Trial_Predator", "30Trial_Prey", "30Trial_Predator", "40Trial_Prey", "40Trial_Predatory", "50Trial_Prey", "50Trial_Predator", "60Trial_Prey", "60Trial_Predator", "70Trial_Prey", "70Trial_Predator", "80Trial_Prey", "80Trial_Predator", "90Trial_Prey", "90Trial_Predator", "100Trial_Prey", "100Trial_Predator")
+
+# apply names to result data frame
+names(RESULTS) <- naming
+
+# attach timeStep column to result data frame
+RESULTSwithTime <- data.frame(TimeStep, RESULTS)
+# The data now:
+# 1st column: time scale
+# even columns: prey abundance (see number in column header for initial prey abundance)
+# odd columns from 3 to 21: predatory abundance (see number in column header for initial prey abundance which the predator population responded to)
+
+# Write results with timesteps to file
+write.csv(RESULTSwithTime, file = "Part3_ParameterStudyResults.csv")
