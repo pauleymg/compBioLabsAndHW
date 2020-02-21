@@ -141,7 +141,7 @@ plot(LVTime, nOverTime, type = "l", xlab = "Generations", ylab = "Population", l
 lines(LVTime, pOverTime, lwd = 3, col = LineColors[2])
 
 # add legend
-legend("topright", legend = c("Prey Abundance", "PredatorAbundance"), col = LineColors, lwd = 3)
+legend("topright", legend = c("Prey Abundance", "Predator Abundance"), col = LineColors, lwd = 3)
 
 
 
