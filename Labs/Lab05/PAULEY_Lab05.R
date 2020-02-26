@@ -162,14 +162,15 @@ write.csv(myResults, file = "PredPreyResults.csv") # write to file
 initPreyVec <- seq(from = 10, to = 100, by = 10)
 
 # preallocate a data-holding arrays
-RESULTS <- matrix(data = NA, nrow = totalGenerations, ncol = (2 * length(initPreyVec)))
-nOverTime <- rep(0, totalGenerations)
-pOverTime <- rep(0, totalGenerations)
-pOverTime[1] <- initPred
+RESULTS <- matrix(data = NA, nrow = totalGenerations, ncol = (2 * length(initPreyVec))) # result array
+nOverTime <- rep(0, totalGenerations) # prey vector
+pOverTime <- rep(0, totalGenerations) # predator vector
+
+pOverTime[1] <- initPred # set initial value of predator abundance
 
 for (h in 1:length(initPreyVec)){
     
-    nOverTime[1] <- initPreyVec[h] # set initial prey abundance
+    nOverTime[1] <- initPreyVec[h] # set initial prey abundance on each cycle
     
     for(i in 2:totalGenerations){
         # calculate prey population at time step
