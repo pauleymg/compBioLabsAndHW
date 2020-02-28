@@ -50,18 +50,17 @@ myAbs(AbsTest)
 # create function to generate the first "n" fibonacci numbers, given quantity
 suchFibonacci <- function(quantity){
     if (quantity == 1){ # bonus 3a
-        FibStorage <- 0 # handle quantity = 1
+        FibStorage <- 0 # handle n = 1
     } else if (quantity == 2){ # bonus 3a
-        FibStorage <- c(0, 1) # handle quantity = 2
+        FibStorage <- c(0, 1) # handle n = 2
     } else if (quantity <= 0){ # bonus 3b
         FibStorage <- "Warning: Fibonacci sequence cannot have no length or negative length" # return warning message if quantity is zero or negative
-    } else if (quantity%%1!=0){ # bonus 3b
-        FibStorage <- "Warning: Fibonacci sequence must have an integer length" # return warning message if quantity is not an integer
+    } else if (quantity %% 1 != 0){ # bonus 3b
+        FibStorage <- "Warning: Fibonacci sequence must have a whole-number length" # return warning message if quantity is not an integer
     } else { #main solution
         # preallocate storage vector of length equivalent to the given quantity
-        FibStorage <- rep(NA, quantity)
-        # set first two fibonacci numbers
-        FibStorage[1] <- 0
+        FibStorage <- rep(0, quantity)
+        # set second fibonacci number (the first was already given 0 in the line above)
         FibStorage[2] <- 1
         # populate fibonacci numbers into storage vector
         for (i in 3:quantity){
@@ -115,7 +114,7 @@ manualArithMean(c(5, 10, 15))
 
 # load data
 labSevenData <- read.csv("../../../Sandbox/CompBio_on_git/Labs/Lab07/DataForLab07.csv")
-# test my arithmetic mean function on a data set
+# test my arithmetic mean function on the data set
 manualArithMean(labSevenData$x)
 
 #---- Problem 4c ----
@@ -128,5 +127,5 @@ SumOSquares <- function(input){
     return(Result)
 }
 
-# demonstrate my sum of squares function works on a data set
+# demonstrate my sum of squares function works on the data set
 SumOSquares(labSevenData$x)
