@@ -48,22 +48,23 @@ myAbs(AbsTest)
 #---- Problem 3 ----
 
 # create function to generate the first "n" fibonacci numbers, given quantity
-suchFibonacci <- function(quantity){
-    if (quantity == 1){ # bonus 3a
-        FibStorage <- 0 # handle n = 1
-    } else if (quantity == 2){ # bonus 3a
-        FibStorage <- c(0, 1) # handle n = 2
-    } else if (quantity <= 0){ # bonus 3b
-        FibStorage <- "Warning: Fibonacci sequence cannot have no length or negative length" # return warning message if quantity is zero or negative
-    } else if (quantity %% 1 != 0){ # bonus 3b
-        FibStorage <- "Warning: Fibonacci sequence must have a whole-number length" # return warning message if quantity is not an integer
+suchFibonacci <- function(n, s = 0){
+    if (n == 1){ # bonus 3a
+        FibStorage <- s # handle n = 1
+    } else if (n == 2){ # bonus 3a
+        FibStorage <- c(s, 1) # handle n = 2
+    } else if (n <= 0){ # bonus 3b
+        FibStorage <- "Error: Fibonacci sequence cannot have no length or negative length" # return warning message if n is zero or negative
+    } else if (n %% 1 != 0){ # bonus 3b
+        FibStorage <- "Error: Fibonacci sequence must have a whole-number length" # return warning message if n is not an integer
     } else { #main solution
-        # preallocate storage vector of length equivalent to the given quantity
-        FibStorage <- rep(0, quantity)
+        # preallocate storage vector of length equivalent to the given n
+        FibStorage <- rep(0, n)
         # set second fibonacci number (the first was already given 0 in the line above)
+        FibStorage[1] <- s
         FibStorage[2] <- 1
         # populate fibonacci numbers into storage vector
-        for (i in 3:quantity){
+        for (i in 3:n){
             FibStorage[i] <- FibStorage[i - 1] + FibStorage[i - 2]
         }
     }
@@ -74,7 +75,7 @@ suchFibonacci <- function(quantity){
 # demonstrate my fibonacci function works
 # testing: standard inputs
 suchFibonacci(3)
-suchFibonacci(42)
+suchFibonacci(42, s = 1)
 
 # testing: sensible low inputs
 suchFibonacci(2)
