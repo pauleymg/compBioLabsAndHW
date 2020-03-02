@@ -12,7 +12,7 @@ x <- 2 # create object with value of my choice
 if (x > 5){
     print("x is greater than 5")
 } else {
-    print("x is smaller than 5")
+    print("x is less than or equal to 5")
 }
 
 # one-line alternative: ifelse(x > 5, yes = "x is greater than 5", no = "x is smaller than 5")
@@ -192,14 +192,22 @@ for (h in 1:length(initPreyVec)){
 # convert to data frame
 RESULTS <- data.frame(RESULTS)
 
-# create vector of column names, with two-part names:
-# "#Trial" specifies initial abundance of prey for that trial
-# "_Prey" designates a prey data column
-# "_Predator" designates a predator data column
-naming <- c("10Trial_Prey", "10Trial_Predator", "20Trial_Prey", "20Trial_Predator", "30Trial_Prey", "30Trial_Predator", "40Trial_Prey", "40Trial_Predatory", "50Trial_Prey", "50Trial_Predator", "60Trial_Prey", "60Trial_Predator", "70Trial_Prey", "70Trial_Predator", "80Trial_Prey", "80Trial_Predator", "90Trial_Prey", "90Trial_Predator", "100Trial_Prey", "100Trial_Predator")
 
-# apply names to result data frame
-names(RESULTS) <- naming
+namingVec <- rep(NA, length(initPreyVec)) # preallocate header vector
+
+# generate column headers
+for (i in 1:length(initPreyVec)){
+    StartingPreyCount <- i * length(initPreyVec)
+    namingVec[(2 * i) - 1] <- paste(StartingPreyCount, "Trial_Prey", sep = "_")
+    namingVec[2 * i] <- paste(StartingPreyCount, "Trial_Predator", sep = "_")
+}
+# the above loop created vector of column names, with two-part names:
+# "#_Trial" specifies initial abundance of prey for that trial
+# "_Prey" designates a prey-data column
+# "_Predator" designates a predator-data column
+
+# apply headers to result data frame
+names(RESULTS) <- namingVec
 
 # attach timeStep column to result data frame
 RESULTSwithTime <- data.frame(TimeStep, RESULTS)
