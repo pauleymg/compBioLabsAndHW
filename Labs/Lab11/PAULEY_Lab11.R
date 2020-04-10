@@ -43,9 +43,39 @@ MostDense <- tail(by_family, n = 8) #6c
 #---- Part 7 ----
 library("ggplot2")
 
-# subset out data from part 5 for plotting ####INCOMPLETE####
-theScouts <- names(LeastDense)
-LightWood <- (by_species$Binomial %in% theScouts)
+# subset out data from part 5 for plotting
+LightWood <- by_species[by_species$Family %in% LeastDense$Family, ]
+HeavyWood <- by_species[by_species$Family %in% MostDense$Family, ]
 
-theHeavies <- names(MostDense)
-HeavyWood <- (by_species$Binomial %in% theHeavies)
+# least dense
+ggplot(LightWood) + 
+    geom_boxplot(mapping = aes(y = MeanDensity)) +
+    facet_wrap(~ Family, ncol = 4) +
+    theme(axis.ticks.x = element_blank()) +
+    theme(axis.text.x = element_blank()) +
+    labs(y = "Density (g/cm^3)")
+  
+# most dense  
+ggplot(HeavyWood) + 
+    geom_boxplot(mapping = aes(y = MeanDensity)) +
+    facet_wrap(~ Family, ncol = 4) +
+    theme(axis.ticks.x = element_blank()) +
+    theme(axis.text.x = element_blank()) +
+    labs(y = "Density (g/cm^3)")
+
+#---- Part 8 ----
+
+# reconfigure for a more comparable view
+# least dense
+ggplot(LightWood) +
+    geom_boxplot(mapping = aes(y = MeanDensity, x = Family)) + 
+    coord_flip() +
+    labs(y = "Density (g/cm^3)") +
+    scale_y_continuous(limits = c(0.15, 1.2))
+
+# most dense
+ggplot(HeavyWood) +
+    geom_boxplot(mapping = aes(y = MeanDensity, x = Family)) + 
+    coord_flip() +
+    labs(y = "Density (g/cm^3)") +
+    scale_y_continuous(limits = c(0.15, 1.2))
