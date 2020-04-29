@@ -20,9 +20,17 @@ Data collection began in October of 2017, at a time when I finally had more idea
 
 Ideas were written down as they occurred, with a header for each date and one or multiple notes below it. In the margin before the body of the idea a project moniker was written to keep track of which story, essay, or poem that particular idea belonged to.
 
-The data set's handwritten form currently extends over 6 notebooks of varying sizes and bindings. Because the data were recorded over two and half years, and because I experimented somewhat with use of color and symbols, the system of recording fluctuates. This, combined with my handwriting, made digitization more difficult than expected. I originally planned to use Optical Character Recognition (OCR) to automate the process, but it turns out using OCR for handwriting requires training a neural network to recognize it, and I didn't have a computer that I could spare days or weeks on training.
+The data set's handwritten form currently extends over 6 notebooks of varying sizes and bindings. Because the data were recorded over two and half years, and because I experimented somewhat with use of color and symbols, the system of recording fluctuates. This, combined with my handwriting, made digitization more difficult than expected. I originally planned to use Optical Character Recognition (OCR) to automate the process, but it turns out using OCR for handwriting requires training a neural network to recognize it, and I didn't have a computer that I could spare days or weeks on training (I'll try it over summer).
 
+This is the most intelligable result I got with standard OCR package tools.
 
+![I swear the original text is in English](https://raw.githubusercontent.com/pauleymg/compBioLabsAndHW/master/IndependentProject/OCRoutput.png)
+
+#### The Analyses
+
+In the first part, the data were transformed into a table based on the date and how many entries appeared for each date. This table of data was then graphed as a histogram and graphed to show the frequency of days on which a certain number of ideas were generated.
+
+In the second part, the data were grouped by project
 
 ## References
 
