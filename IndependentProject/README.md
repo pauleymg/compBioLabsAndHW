@@ -22,6 +22,10 @@ Ideas were written down as they occurred, with a header for each date and one or
 
 The data set's handwritten form currently extends over 6 notebooks of varying sizes and bindings. Because the data were recorded over two and half years, and because I experimented somewhat with use of color and symbols, the system of recording fluctuates. This, combined with my handwriting, made digitization more difficult than expected. I originally planned to use Optical Character Recognition (OCR) to automate the process, but it turns out using OCR for handwriting requires training a neural network to recognize it, and that process can take days or weeks (Tesseract, 2020). I intend to try neural network solution on OCR when I have more time over summer, but for now I focused on transcribing the date, notebook, and project-identifier for the first 1805 ideas.
 
+This is the most intelligible capture of my handwriting I got with packaged OCR tools:
+
+![OCR gibberish](https://raw.githubusercontent.com/pauleymg/compBioLabsAndHW/master/IndependentProject/OCRoutput2.png)
+
 #### The Analyses
 
 In the first part, the data were transformed into a table based on the date and how many lines appeared for each date. This table of data was then graphed as a histogram and graphed to show the frequency of days on which a certain number of ideas were generated.
