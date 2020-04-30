@@ -8,7 +8,7 @@ Can the patterns associated with two biological principles, mast seeding and com
 
 Inspiration has remained an ambigious phenomenon, long unstudied by psychology (Thrash, Moldovan, Oleynick, and Maruskin 2014). In this dearth of research, establishing whether certain patterns exist in inspiration might be helpful in guiding future studies.  
 Using biology as inspiration is nothing new—there's a field of engineering called "biomimetic design" which does exactly that. The two processes chosen, mast seeding and competitive exclusion, are useful because they are analogous to aspects of inspiration which are sometimes anecdotally reported:
-* If as some claim, there are some days when "the Muse is with you" and others were it is absent, we should expect to find a pattern akin to mast seeding. 
+* If as some claim, there are some days when "the Muse is with you" and others were it is absent, we should expect to find a pattern akin to mast seeding, with many days of little inspiration and a few days of high output, but few if any in between.
 * Some writers report that a particular project or idea will seize hold so firmly that it prevents other ideas from forming. If true, this would be analogous to competitive exclusion, with the dominant project outcompeting others for limited attention and time.
 
 ## Methods
@@ -20,11 +20,7 @@ Data collection began in October of 2017, at a time when I finally had more idea
 
 Ideas were written down as they occurred, with a header for each date and one or multiple notes below it. In the margin before the body of the idea a project moniker was written to keep track of which story, essay, or poem that particular idea belonged to.
 
-The data set's handwritten form currently extends over 6 notebooks of varying sizes and bindings. Because the data were recorded over two and half years, and because I experimented somewhat with use of color and symbols, the system of recording fluctuates. This, combined with my handwriting, made digitization more difficult than expected. I originally planned to use Optical Character Recognition (OCR) to automate the process, but it turns out using OCR for handwriting requires training a neural network to recognize it, and I didn't have a computer that I could spare days or weeks on training. I intend to come back to the OCR problem over summer, but for now I ignored the bulk of each idea and hand-transcribed the date, notebook, and project-identifier for 1805 ideas.
-
-This is the most intelligable result I got with standard OCR package tools:
-
-![I swear the original text is in English](https://raw.githubusercontent.com/pauleymg/compBioLabsAndHW/master/IndependentProject/OCRoutput.png)
+The data set's handwritten form currently extends over 6 notebooks of varying sizes and bindings. Because the data were recorded over two and half years, and because I experimented somewhat with use of color and symbols, the system of recording fluctuates. This, combined with my handwriting, made digitization more difficult than expected. I originally planned to use Optical Character Recognition (OCR) to automate the process, but it turns out using OCR for handwriting requires training a neural network to recognize it, and that process can take days or weeks (Tesseract, 2020). I intend to try neural network solution on OCR when I have more time over summer, but for now I focused on transcribing the date, notebook, and project-identifier for the first 1805 ideas.
 
 #### The Analyses
 
@@ -48,8 +44,10 @@ The leading project towers more than 2.5 times higher than the next most abundan
 
 ![Hypothesis doesn't feel so good](https://raw.githubusercontent.com/pauleymg/compBioLabsAndHW/master/IndependentProject/UNASvsProjects.png)
 
-If the top-performing project were consuming all the time and concentration there wouldn't be several times more independent ideas. The pattern may have been there, but not for the hypothesized reason.
+If the top-performing project were consuming all the time and concentration, there wouldn't so many project-independent ideas. I must conclude that what the writers around me reported was anecdotal, and more representative of the way we remember things than of inspiration.
 
 ## References
+
+Tesseract. 2020. "How to use the tools provided to train Tesseract 4.00." Last modified February 6, 2020. [https://tesseract-ocr.github.io/tessdoc/TrainingTesseract-4.00](https://tesseract-ocr.github.io/tessdoc/TrainingTesseract-4.00)
 
 Thrash, Todd, Emil Moldovan, Victoria Oleynick, and Laura Maruskin. 2014. "The Psychology of Inspiration." _Social and Personality Psychology Compass_ 8, no. 9: 495-510. [https://doi-org.colorado.idm.oclc.org/10.1111/spc3.12127](https://doi-org.colorado.idm.oclc.org/10.1111/spc3.12127)
